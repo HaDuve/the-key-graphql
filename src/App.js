@@ -1,59 +1,39 @@
 import "./App.css";
-import React from "react";
-import { useMutation, useQuery } from "@apollo/client";
-import { LOGIN_MUTATION, LOGOUT_MUTATION } from "./graphql/mutations";
-import { GET_CONTENT_NODES_QUERY } from "./graphql/queries";
+import React, { useState } from "react";
+import { ApolloProvider } from "@apollo/client";
+import Login from "./components/authentication/login";
+import client from "./apollo";
+import NodeViewer from "./components/content/nodeviewer";
 
 function App() {
-  const [loginMutation] = useMutation(LOGIN_MUTATION);
-  const { loading, error, data } = useQuery(GET_CONTENT_NODES_QUERY);
-  const [logoutMutation] = useMutation(LOGOUT_MUTATION);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleLogin = async () => {
-    try {
-      const { data } = await loginMutation({
-        variables: { username: "exampleUser", password: "examplePassword" }, // Replace with actual username and password input values
-      });
-      // Handle login response, store tokens, update UI, etc.
-      console.log("Login response:", data);
-    } catch (error) {
-      // Handle login error
-      console.error("Login error:", error);
-    }
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true); // Update login status on successful login
   };
 
-  const handleLogout = async () => {
-    try {
-      const { data } = await logoutMutation();
-      // Handle logout response, clear tokens, update UI, etc.
-      console.log("Logout response:", data);
-    } catch (error) {
-      // Handle logout error
-      console.error("Logout error:", error);
-    }
+  const handleLogout = () => {
+    // Implement logout functionality, clear tokens, reset state, etc.
+    setIsLoggedIn(false);
   };
 
-  // Use data from GET_CONTENT_NODES_QUERY
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-  const contentNodes = data?.Admin?.Tree?.GetContentNodes || [];
-
-  // Display content nodes
   return (
-    <div className="App">
-      <header className="App-header">
-        {/* Your other elements */}
-        <div>
-          <h2>Content Nodes:</h2>
-          <ul>
-            {contentNodes.map((node, index) => (
-              <li key={index}>{node?.structureDefinition?.title}</li>
-            ))}
-          </ul>
-        </div>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <div className="App">
+        <header className="App-header">
+          <h1>The Key graphql react app</h1>
+          {!isLoggedIn ? (
+            <Login onLoginSuccess={handleLoginSuccess} />
+          ) : (
+            <div>
+              <p>User is logged in!</p>
+              <NodeViewer />
+              <button onClick={handleLogout}>Logout</button>
+            </div>
+          )}
+        </header>
+      </div>
+    </ApolloProvider>
   );
 }
 
