@@ -9,11 +9,10 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLoginSuccess = () => {
-    setIsLoggedIn(true); // Update login status on successful login
+    setIsLoggedIn(true);
   };
 
-  const handleLogout = () => {
-    // Implement logout functionality, clear tokens, reset state, etc.
+  const handleLogout = async () => {
     setIsLoggedIn(false);
   };
 

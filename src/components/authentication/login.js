@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { LOGIN_MUTATION, LOGOUT_MUTATION } from "../../graphql/mutations.ts";
+import { LOGIN_MUTATION } from "../../graphql/mutations.ts";
 
 const LoginForm = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState("");
@@ -8,7 +8,6 @@ const LoginForm = ({ onLoginSuccess }) => {
   const loginJwtInput = { email: username, password: password };
 
   const [loginMutation, { loading, error }] = useMutation(LOGIN_MUTATION);
-  const [logoutMutation] = useMutation(LOGOUT_MUTATION);
 
   const handleLogin = async () => {
     try {
