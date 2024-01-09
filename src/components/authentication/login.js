@@ -32,17 +32,6 @@ const LoginForm = ({ onLoginSuccess }) => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      const { data } = await logoutMutation();
-      // Handle logout response, clear tokens, update UI, etc.
-      console.log("Logout response:", data);
-    } catch (error) {
-      // Handle logout error
-      console.error("Logout error:", error);
-    }
-  };
-
   return (
     <div>
       <h2>Login Form</h2>
