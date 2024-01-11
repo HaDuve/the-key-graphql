@@ -4,10 +4,11 @@ export const LOGIN_MUTATION = gql`
   mutation LoginJwt($input: LoginJwtInput!) {
     Auth {
       loginJwt(input: $input) {
-        jwtTokens {
-          accessToken
+        loginResult {
+          jwtTokens {
+            accessToken
+          }
         }
-        clientMutationId
       }
     }
   }
