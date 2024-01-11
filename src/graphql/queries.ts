@@ -1,18 +1,13 @@
 import { gql } from "@apollo/client";
 
 export const GET_CONTENT_NODES_QUERY = gql`
-  query GetContentNodes(
-    $before: String
-    $after: String
-    $first: Int
-    $last: Int
-  ) {
+  query Query($first: Int, $before: String, $after: String, $last: Int) {
     Admin {
       Tree {
         GetContentNodes(
+          first: $first
           before: $before
           after: $after
-          first: $first
           last: $last
         ) {
           edges {
@@ -21,6 +16,12 @@ export const GET_CONTENT_NODES_QUERY = gql`
                 title
               }
             }
+          }
+          pageInfo {
+            endCursor
+            hasNextPage
+            hasPreviousPage
+            startCursor
           }
         }
       }
