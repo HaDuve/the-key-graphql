@@ -8,11 +8,15 @@ import LoginForm from "./components/authentication/login";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleLoginSuccess = () => {
+  const handleLoginSuccess = (token = "") => {
+    if (token) {
+      localStorage.setItem("token", token);
+    }
     setIsLoggedIn(true);
   };
 
   const handleLogout = async () => {
+    await client.resetStore();
     setIsLoggedIn(false);
   };
 

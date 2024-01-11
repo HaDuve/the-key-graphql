@@ -16,13 +16,12 @@ const LoginForm = ({ onLoginSuccess }) => {
       });
       // validate that data includes a loginJwt
       // TODO: ask for public key to verify jwt with jsonwebtoken library
+      const token = data.Auth.loginJwt.jwtTokens.accessToken;
       const isTokenInvalid =
-        !data.Auth.loginJwt.jwtTokens.accessToken ||
-        typeof data.Auth.loginJwt.jwtTokens.accessToken !== "string" ||
-        data.Auth.loginJwt.jwtTokens.accessToken.length < 1;
+        !token || typeof token !== "string" || token.length < 1;
 
       if (!isTokenInvalid) {
-        onLoginSuccess();
+        onLoginSuccess(token);
       }
       // TODO: Update error state if loginJwt is invalid
     } catch (error) {
