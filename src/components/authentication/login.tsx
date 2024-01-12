@@ -31,6 +31,7 @@ const LoginForm = ({ onLoginSuccess }) => {
       setMarkInvalid(true);
       return;
     }
+    setMarkInvalid(false);
     try {
       const { data } = await loginMutation({
         variables: { input: loginJwtInput },
@@ -79,11 +80,12 @@ const LoginForm = ({ onLoginSuccess }) => {
         </button>
         {error && <p>Error: {error.message}</p>}
       </form>
-      {markInvalid && !usernameValid && (
-        <p style={{ color: "red" }}>Please enter a correct Username!</p>
-      )}
-      {markInvalid && !passwordValid && (
-        <p style={{ color: "red" }}>Please enter a correct Password!</p>
+      {markInvalid && (
+        <p style={{ color: "red" }}>
+          Please enter correct {usernameValid ? "" : "Username"}
+          {!usernameValid && !passwordValid && " and "}
+          {passwordValid ? "" : "Password"}!
+        </p>
       )}
     </div>
   );
