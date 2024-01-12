@@ -7,16 +7,21 @@ import LoginForm from "./components/authentication/login";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("");
 
-  const handleLoginSuccess = (token = "") => {
+  const handleLoginSuccess = (token = "", user = "") => {
     if (token) {
       localStorage.setItem("token", token);
+    }
+    if (user) {
+      setUserName(user);
     }
     setIsLoggedIn(true);
   };
 
   const handleLogout = async () => {
     await client.resetStore();
+    setUserName("");
     setIsLoggedIn(false);
   };
 
@@ -29,9 +34,9 @@ function App() {
             <LoginForm onLoginSuccess={handleLoginSuccess} />
           ) : (
             <div>
-              <p>User is logged in!</p>
-              <NodeViewer />
+              <p>Hello, {userName}!</p>
               <button onClick={handleLogout}>Logout</button>
+              <NodeViewer />
             </div>
           )}
         </header>
