@@ -15,10 +15,22 @@ const NodeViewer = () => {
           return (
             <li
               key={index}
-              style={{ minHeight: "30vh" }}
+              style={{
+                minHeight: "30vh",
+                minWidth: "30vw",
+                border: "1px solid black",
+                margin: "1rem",
+                padding: "1rem",
+                listStyle: "none",
+                backgroundColor: "darkgray",
+                textAlign: "center",
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              }}
               ref={nodes.length === index + 1 ? thresholdElementRef : null}
             >
-              {index + 1 + " " + edge.node?.structureDefinition?.title}
+              {edge.node?.structureDefinition?.title}
             </li>
           );
         }) ?? []}
