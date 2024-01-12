@@ -1,24 +1,8 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
-import { GET_CONTENT_NODES_QUERY } from "../../graphql/queries.ts";
+import useLayout from "../../hooks/useLayout.tsx";
 
 const NodeViewer = () => {
-  // const beforeValue = "null";
-  // const afterValue = "null";
-  const firstValue = 10;
-  // const lastValue = 0;
-
-  const { loading, error, data } = useQuery(GET_CONTENT_NODES_QUERY, {
-    variables: {
-      // pagination variables
-      // before: beforeValue,
-      // after: afterValue,
-      first: firstValue,
-      // last: lastValue,
-    },
-  });
-
-  const contentNodes = data?.Admin?.Tree?.GetContentNodes || [];
+  const { loading, nodes, thresholdElementRef, error } = useLayout();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -27,9 +11,17 @@ const NodeViewer = () => {
     <div>
       <h2>Content Nodes</h2>
       <ul>
-        {contentNodes.edges?.map((edge, index) => (
-          <li key={index}>{edge.node?.structureDefinition?.title}</li>
-        ))}
+        {nodes.map((edge, index) => {
+          return (
+            <li
+              key={index}
+              style={{ minHeight: "30vh" }}
+              ref={nodes.length === index + 1 ? thresholdElementRef : null}
+            >
+              {index + 1 + " " + edge.node?.structureDefinition?.title}
+            </li>
+          );
+        }) ?? []}
       </ul>
     </div>
   );
