@@ -2,8 +2,8 @@ import "./App.css";
 import React, { useState } from "react";
 import { ApolloProvider } from "@apollo/client";
 import client from "./apollo";
-import NodeViewer from "./components/content/nodeviewer";
-import LoginForm from "./components/authentication/login";
+import NodeViewer from "./components/content/nodeviewer.tsx";
+import LoginForm from "./components/authentication/login.tsx";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
