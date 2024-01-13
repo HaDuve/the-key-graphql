@@ -6,7 +6,7 @@ const useLayout = () => {
 
   const { thresholdElementRef } = useInfiniteScroll({
     fetchNextPage: fetchMoreNodes,
-    options: { rootMargin: "400px" },
+    options: { rootMargin: "50px" },
   });
 
   return { loading, nodes, thresholdElementRef, error };

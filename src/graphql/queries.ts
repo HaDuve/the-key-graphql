@@ -15,6 +15,7 @@ export const GET_CONTENT_NODES_QUERY: DocumentNode = gql`
               structureDefinition {
                 title
               }
+              id
             }
           }
           pageInfo {

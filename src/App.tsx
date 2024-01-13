@@ -45,7 +45,7 @@ function App() {
               <p>Hello, {userName}!</p>
               <button onClick={handleLogout}>Logout</button>
               <DndProvider backend={HTML5Backend}>
-                <NodeViewer />
+                <NodeViewer onLogout={handleLogout} />
               </DndProvider>
             </div>
           )}
