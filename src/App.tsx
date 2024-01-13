@@ -22,11 +22,15 @@ function App() {
   };
 
   const handleLogout = async () => {
-    await client.resetStore();
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     setUserName("");
     setIsLoggedIn(false);
+    try {
+      await client.resetStore();
+    } catch (error) {
+      console.log("Error resetting store:", error);
+    }
   };
 
   return (
