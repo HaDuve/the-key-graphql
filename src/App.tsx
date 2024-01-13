@@ -2,10 +2,10 @@ import "./App.css";
 import React, { useState } from "react";
 import { ApolloProvider } from "@apollo/client";
 import client from "./apollo";
-import NodeViewer from "./components/content/nodeViewer.tsx";
 import LoginForm from "./components/authentication/login.tsx";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import NodeViewer from "./components/content/nodeViewer.tsx";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,6 +23,8 @@ function App() {
 
   const handleLogout = async () => {
     await client.resetStore();
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
     setUserName("");
     setIsLoggedIn(false);
   };

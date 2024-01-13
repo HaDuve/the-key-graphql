@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { LOGIN_MUTATION } from "../../graphql/mutations.ts";
 import { capitalizeEachWord, splitNameFromMail } from "../../util/string.ts";
@@ -42,6 +42,9 @@ const LoginForm = ({ onLoginSuccess }) => {
         !token || typeof token !== "string" || token.length < 1;
 
       if (!isTokenInvalid) {
+        // store token and username in local storage
+        localStorage.setItem("token", token);
+        localStorage.setItem("username", userNameCapitalized);
         onLoginSuccess(token, userNameCapitalized);
       }
     } catch (error) {
@@ -49,6 +52,16 @@ const LoginForm = ({ onLoginSuccess }) => {
       console.error("Login error:", error);
     }
   };
+
+  useEffect(() => {
+    // check if user is already logged in
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("username");
+    if (token && user) {
+      //TODO: validate token
+      onLoginSuccess(token, user);
+    }
+  });
 
   return (
     <div>
