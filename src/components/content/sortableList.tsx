@@ -69,14 +69,22 @@ const SortableList = ({ items }) => {
     handleSort(updatedItems);
   };
 
+  const handleReset = () => {
+    resetOrder();
+    resetPageLength();
+  };
+
   const resetOrder = () => {
     localStorage.removeItem("sortedList");
     setRenderedItems([items]);
   };
+  const resetPageLength = () => {
+    localStorage.removeItem("minPageLength");
+  };
   return (
     <div>
       <p>{items.length} nodes rendered</p>
-      <button onClick={resetOrder}>Reset</button>
+      <button onClick={() => handleReset()}>Reset</button>
       {renderedItems.map((item: Item, index) => {
         if (!item) return null;
         return (
