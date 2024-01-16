@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import useLayout from "../../hooks/useLayout.tsx";
-import SortableList, { Item } from "./sortableList.tsx";
+import DraggableList from "./draggableList.tsx";
 
 const NodeViewer = ({ onLogout }) => {
   const { loading, nodes, thresholdElementRef, error } = useLayout();
@@ -14,28 +14,16 @@ const NodeViewer = ({ onLogout }) => {
     }
     return <p>Error: {error.message}</p>;
   }
-  const items: Item[] =
-    nodes?.map((edge, index) => ({
-      id: edge.node?.id,
-      key: edge.node?.id,
-      jsxElement: (
-        <li
-          key={edge.id}
-          ref={nodes.length === index + 1 ? thresholdElementRef : null}
-        >
-          {edge.node?.structureDefinition?.title}
-        </li>
-      ),
-    })) || [];
 
-  return (
-    <div>
-      <h2>Content Nodes</h2>
-      <ul>
-        <SortableList items={items}></SortableList>
-      </ul>
-    </div>
-  );
+  const items: { string: string; ref?: React.RefObject<HTMLDivElement> }[] =
+    nodes?.map((edge, index) => {
+      return {
+        string: edge.node?.structureDefinition?.title || "",
+        ref: nodes.length === index + 1 ? thresholdElementRef : undefined,
+      };
+    }) || [];
+
+  return <DraggableList items={items}></DraggableList>;
 };
 
 export default NodeViewer;

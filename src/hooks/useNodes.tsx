@@ -6,6 +6,7 @@ import { PAGE_MAX, PAGE_MIN } from "../constants/nodeviewerConst.ts";
 
 export const useNodes = () => {
   const storedMinPageLength = localStorage.getItem("minPageLength");
+  console.log("useNodes ~ storedMinPageLength:", storedMinPageLength);
   const initialPageLength = storedMinPageLength
     ? parseInt(storedMinPageLength)
     : PAGE_MIN;

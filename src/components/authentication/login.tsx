@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { LOGIN_MUTATION } from "../../graphql/mutations.ts";
 import { capitalizeEachWord, splitNameFromMail } from "../../util/string.ts";
+import styles from "../../styles.module.css";
 
 const LoginForm = ({ onLoginSuccess }) => {
   // form input states
@@ -64,7 +65,7 @@ const LoginForm = ({ onLoginSuccess }) => {
   });
 
   return (
-    <div>
+    <div className={styles.content}>
       <h2>Login Form</h2>
       <form
         onSubmit={(e) => {

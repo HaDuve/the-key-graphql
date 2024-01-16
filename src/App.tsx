@@ -6,6 +6,7 @@ import LoginForm from "./components/authentication/login.tsx";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import NodeViewer from "./components/content/nodeViewer.tsx";
+import styles from "./styles.module.css";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,8 +23,7 @@ function App() {
   };
 
   const handleLogout = async () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    localStorage.clear();
     setUserName("");
     setIsLoggedIn(false);
     try {
@@ -35,18 +35,17 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <div className="App">
+      <div className={styles.container}>
         <header className="App-header">
-          <h1>The Key graphql react app</h1>
           {!isLoggedIn ? (
             <LoginForm onLoginSuccess={handleLoginSuccess} />
           ) : (
-            <div>
+            <div className={styles.headercontainer}>
               <p>Hello, {userName}!</p>
               <button onClick={handleLogout}>Logout</button>
-              <DndProvider backend={HTML5Backend}>
-                <NodeViewer onLogout={handleLogout} />
-              </DndProvider>
+              {/* <DndProvider backend={HTML5Backend}> */}
+              <NodeViewer onLogout={handleLogout} />
+              {/* </DndProvider> */}
             </div>
           )}
         </header>
