@@ -5,7 +5,7 @@ import client from "./apollo";
 import LoginForm from "./components/authentication/login.tsx";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import NodeViewer from "./components/content/nodeViewer.tsx";
+import NodeViewer from "./components/content/nodeviewer.tsx";
 import styles from "./styles.module.css";
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
     try {
       await client.resetStore();
     } catch (error) {
-      console.log("Error resetting store:", error);
+      console.warn("Error resetting store:", error);
     }
   };
 
@@ -43,9 +43,7 @@ function App() {
             <div className={styles.headercontainer}>
               <p>Hello, {userName}!</p>
               <button onClick={handleLogout}>Logout</button>
-              {/* <DndProvider backend={HTML5Backend}> */}
               <NodeViewer onLogout={handleLogout} />
-              {/* </DndProvider> */}
             </div>
           )}
         </header>
