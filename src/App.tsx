@@ -27,7 +27,7 @@ function App() {
     try {
       await client.resetStore();
     } catch (error) {
-      console.warn("Error resetting store:", error);
+      // console.warn("Error resetting store:", error);
     }
   };
 
