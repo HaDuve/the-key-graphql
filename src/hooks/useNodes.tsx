@@ -41,7 +41,7 @@ export const useNodes = () => {
     [data]
   );
 
-  const fetchMoreNodes = useCallback(() => {
+  const fetchMoreNodes = useCallback(async () => {
     let deltaLength = 0;
     const longerPageLength = nodes.length + PAGE_MIN;
     if (longerPageLength > PAGE_MAX) {
@@ -55,7 +55,7 @@ export const useNodes = () => {
     const newPageLength =
       deltaLength !== 0 ? nodes.length + deltaLength : longerPageLength;
 
-    fetchMore({
+    await fetchMore({
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) return prev;
         // updateQuery
