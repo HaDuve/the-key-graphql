@@ -4,14 +4,21 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { GET_CONTENT_NODES_QUERY } from "../graphql/queries.ts";
 import { PAGE_MAX, PAGE_MIN } from "../constants/nodeviewerConst.ts";
 
+export type NodesType = {
+  node: {
+    id: string;
+    structureDefinition: {
+      title: string;
+    };
+  };
+};
+
 export const useNodes = () => {
   const storedMinPageLength = localStorage.getItem("minPageLength");
-  console.log("useNodes ~ storedMinPageLength:", storedMinPageLength);
   const initialPageLength = storedMinPageLength
     ? parseInt(storedMinPageLength)
     : PAGE_MIN;
 
-  console.log("useNodes ~ initialPageLength:", initialPageLength);
   const { data, fetchMore, loading, error } = useQuery(
     GET_CONTENT_NODES_QUERY,
     {
@@ -29,7 +36,7 @@ export const useNodes = () => {
     localStorage.setItem("minPageLength", initialPageLength.toString());
   }, [initialPageLength]);
 
-  const nodes = useMemo(
+  const nodes: NodesType[] = useMemo(
     () => data?.Admin?.Tree?.GetContentNodes?.edges ?? [],
     [data]
   );
@@ -42,7 +49,6 @@ export const useNodes = () => {
         // set delta until max
         deltaLength = PAGE_MAX - nodes.length;
       } else {
-        console.log("useNodes ~ max page length reached", deltaLength);
         return;
       }
     }
