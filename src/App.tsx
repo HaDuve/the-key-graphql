@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import { ApolloProvider } from "@apollo/client";
 import client from "./apollo";
 import LoginForm from "./components/authentication/login.tsx";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import NodeViewer from "./components/content/nodeviewer.tsx";
 import styles from "./styles.module.css";
 
