@@ -14,9 +14,9 @@ const useIntersectedElement = <ThresholdElement extends Element = Element>({
 
   const observer = useMemo(
     () =>
-      new IntersectionObserver(([entry]) => {
+      new IntersectionObserver(async ([entry]) => {
         if (!entry.isIntersecting) return;
-        callback();
+        await callback();
       }, options),
     [callback, options]
   );
