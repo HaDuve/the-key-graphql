@@ -30,13 +30,13 @@
 .content {
   position: relative;
   width: 500px;
-  height: NODE_HEIGHT * 20;
+  height: 30vh * 20;
 }
 
 .content > div {
   position: absolute;
-  width: 500px;
-  height: NODE_HEIGHT;
+  width: 80vw;
+  height: 30vh;
   transform-origin: 50% 50% 0px;
   border-radius: 5px;
   color: white;
@@ -47,6 +47,7 @@
   text-transform: uppercase;
   letter-spacing: 2px;
   touch-action: none;
+  user-select: none;
 }
 
 .content > div:nth-child(1) {
