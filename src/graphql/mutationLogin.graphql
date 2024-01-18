@@ -1,8 +1,0 @@
-mutation Login($username: String!, $password: String!) {
-  loginJwt(username: $username, password: $password) {
-    accessToken
-    user {
-      username
-    }
-  }
-}

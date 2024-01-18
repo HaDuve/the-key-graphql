@@ -13,9 +13,10 @@
 }
 
 .headercontainer {
-  background: linear-gradient(135deg, #355 0%, #335 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
   align-items: center;
-  height: 100%;
   justify-content: center;
 }
 
@@ -29,22 +30,26 @@
 
 .content {
   position: relative;
-  width: 500px;
-  height: 30vh * 20;
+  /* height: 3000px; */
+  margin-top: 10vh;
 }
 
 .content > div {
   position: absolute;
-  width: 80vw;
+  margin-left: -20vw;
+  width: 50vw;
   height: 30vh;
+  max-height: 190px;
+  max-width: 500px;
   transform-origin: 50% 50% 0px;
-  border-radius: 5px;
+  border-radius: 10px;
   color: white;
   line-height: 40px;
   padding-left: 32px;
   font-size: 14.5px;
   background: lightblue;
   text-transform: uppercase;
+  text-align: center;
   letter-spacing: 2px;
   touch-action: none;
   user-select: none;

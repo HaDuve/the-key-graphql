@@ -5,7 +5,9 @@ import DraggableList from "./draggableList.tsx";
 const NodeViewer = ({ onLogout }) => {
   const { loading, nodes, thresholdElementRef, error } = useLayout();
 
+  // without this loading return, DraggableList will not render correctly
   if (loading) return <p>Loading...</p>;
+
   if (error) {
     // if 401 error logout
     if (error.message.includes("401") && onLogout) {
@@ -23,7 +25,7 @@ const NodeViewer = ({ onLogout }) => {
       };
     }) || [];
 
-  return <DraggableList items={items}></DraggableList>;
+  return <DraggableList items={items} />;
 };
 
 export default NodeViewer;

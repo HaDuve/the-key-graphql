@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { useSprings, animated } from "@react-spring/web";
-import { useDrag } from "react-use-gesture";
+import { useDrag } from "@use-gesture/react";
 import clamp from "lodash.clamp";
 import swap from "lodash-move";
 
@@ -32,14 +32,31 @@ function fn(
         };
 }
 
-export default function DraggableList({
+function DraggableList({
   items,
 }: {
   items: { string: string; ref?: React.RefObject<HTMLDivElement> }[];
 }) {
+  // restore and merge order (array with indices) from localstorage
   const storedOrder = localStorage.getItem("itemOrder");
   const parsedOrder = storedOrder ? JSON.parse(storedOrder) : null;
-  const order = useRef<number[]>(parsedOrder || items.map((_, index) => index));
+  const parsedOrderValid =
+    parsedOrder && parsedOrder.length > 0 && parsedOrder[0] != null;
+  const sameLength = parsedOrderValid && parsedOrder.length === items.length;
+  const correctOrder = sameLength
+    ? parsedOrder
+    : items.map((_, index) => {
+        // 1. take the parsed order if it is valid
+        // 2. push the normal indices after parsedOrder.length
+        // (incase there are more items than order.length)
+        if (parsedOrderValid && index < parsedOrder.length) {
+          return parsedOrder[index];
+        }
+        return index;
+      });
+
+  const order = useRef<number[]>(correctOrder);
+  if (parsedOrder) order.current = correctOrder;
   const [springs, api] = useSprings(items.length, fn(order.current));
 
   const bind = useDrag(({ args: [originalIndex], active, movement: [, y] }) => {
@@ -57,24 +74,14 @@ export default function DraggableList({
     }
   });
 
-  // Load order from local storage on component mount
-  useEffect(() => {
-    const storedOrder = localStorage.getItem("itemOrder");
-    const parsedOrder = storedOrder ? JSON.parse(storedOrder) : null;
-    if (parsedOrder) {
-      order.current = parsedOrder;
-      api.start(fn(parsedOrder));
-    }
-  }, [api]);
-
   return (
-    <div className={styles.nodecontainer}>
+    <div className={styles.container}>
       <div className={styles.content} style={{ height: 20 * NODE_HEIGHT }}>
         {springs.map(({ zIndex, shadow, y, scale }, i) => (
           <animated.div
             {...bind(i)}
             key={i}
-            ref={items[i].ref}
+            ref={items[i].ref || null}
             style={{
               zIndex,
               boxShadow: shadow.to(
@@ -90,3 +97,11 @@ export default function DraggableList({
     </div>
   );
 }
+
+export default DraggableList;
+
+// // export default memoized
+// export default React.memo(DraggableList, (prevProps, nextProps) => {
+//   // only change if length of items changes
+//   return prevProps.items.length === nextProps.items.length;
+// });
