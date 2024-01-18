@@ -65,7 +65,7 @@ const LoginForm = ({ onLoginSuccess }) => {
   });
 
   return (
-    <div className={styles.content}>
+    <div>
       <h2>Login Form</h2>
       <form
         onSubmit={(e) => {
