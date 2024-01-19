@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { LOGIN_MUTATION } from '../../graphql/mutations.ts'
 import { capitalizeEachWord, splitNameFromMail } from '../../util/string.ts'
-import styles from '../../styles.module.css'
 import LoadingSpinner from '../generic/LoadingSpinner/LoadingSpinner.tsx'
 
 const LoginForm = ({ onLoginSuccess }) => {

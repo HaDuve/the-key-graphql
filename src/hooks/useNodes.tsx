@@ -1,6 +1,6 @@
 // src/hooks/usePosts/index.ts
 import { useQuery } from '@apollo/client'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { GET_CONTENT_NODES_QUERY } from '../graphql/queries.ts'
 import { PAGE_MAX, PAGE_MIN } from '../constants/nodeviewerConst.ts'
 
