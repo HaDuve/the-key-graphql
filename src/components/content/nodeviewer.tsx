@@ -1,5 +1,5 @@
 import React from 'react'
-import useLayout from '../../hooks/useLayout.tsx'
+import useLayout from '../../hooks/useLayout.ts'
 import DraggableList from './draggableList.tsx'
 import LoadingSpinner from '../generic/LoadingSpinner/LoadingSpinner.tsx'
 

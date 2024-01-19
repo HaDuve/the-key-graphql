@@ -1,5 +1,5 @@
 import useIntersectedElement from './useIntersectedElement.ts'
-import { UseIntersectedElementProps } from './useIntersectedElement'
+import { UseIntersectedElementProps } from './useIntersectedElement.ts'
 
 export type UseInfiniteScrollProps = {
   fetchNextPage: () => void
