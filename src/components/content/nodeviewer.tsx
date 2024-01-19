@@ -1,12 +1,13 @@
 import React from "react";
 import useLayout from "../../hooks/useLayout.tsx";
 import DraggableList from "./draggableList.tsx";
+import LoadingSpinner from "../generic/LoadingSpinner/LoadingSpinner.tsx";
 
 const NodeViewer = ({ onLogout }) => {
   const { loading, nodes, thresholdElementRef, error } = useLayout();
 
   // without this loading return, DraggableList will not render correctly
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner />;
 
   if (error) {
     // if 401 error logout

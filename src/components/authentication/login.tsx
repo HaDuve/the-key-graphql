@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_MUTATION } from "../../graphql/mutations.ts";
 import { capitalizeEachWord, splitNameFromMail } from "../../util/string.ts";
 import styles from "../../styles.module.css";
+import LoadingSpinner from "../generic/LoadingSpinner/LoadingSpinner.tsx";
 
 const LoginForm = ({ onLoginSuccess }) => {
   // form input states
@@ -64,6 +65,8 @@ const LoginForm = ({ onLoginSuccess }) => {
     }
   });
 
+  if (loading) return <LoadingSpinner />;
+
   return (
     <div>
       <h2>Login Form</h2>
@@ -90,7 +93,7 @@ const LoginForm = ({ onLoginSuccess }) => {
           />
         </label>
         <button type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
+          {"Login"}
         </button>
         {error && <p>Error: {error.message}</p>}
       </form>
