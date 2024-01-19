@@ -1,7 +1,11 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import App from './App'
-import { time } from 'console'
+
+const CONFIDENTIAL = {
+  userName: '<enter username>',
+  password: '<enter password>',
+}
 
 // SETUP //
 
@@ -38,13 +42,12 @@ xit('login succeeds with correct credentials', async () => {
   const { user } = setup(<App />)
 
   // get username and password via environment variables
-  const username = process.env.USERNAME
-  const password = process.env.PASSWORD
-  await user.type(screen.getByLabelText(/username/i), username)
-  await user.type(screen.getByLabelText(/password/i), password)
+  await user.type(screen.getByLabelText(/username/i), CONFIDENTIAL.userName)
+  await user.type(screen.getByLabelText(/password/i), CONFIDENTIAL.password)
   await user.click(screen.getByRole('button', { name: /Login/i }))
   // wait 2000ms
-  await new Promise((r) => setTimeout(r, 2000))
   const successText = await screen.findByText(/Hello/i)
-  expect(successText).toBeInTheDocument()
+  await waitFor(() => {
+    expect(successText).toBeInTheDocument()
+  })
 })
