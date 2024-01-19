@@ -6,11 +6,12 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Manual testing (npm start) is required to check the login form and the sortable, lazy-loading list.
-Features:
+Manual testing (npm start) is required to check the login form and the sortable, lazy-loading list.\
 
-- Login form with validation
-- Sortable (Drag and Drop), Lazy-loading List
+Testable Features:
+
+- Login/Logout-Form with input validation
+- Sortable (Drag & Drop), Lazy-Loading list (logout to reset the list)
 
 ### `npm test`
 
