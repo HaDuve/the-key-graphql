@@ -4,7 +4,7 @@ import {
   isValidString,
 } from '../string.ts'
 
-it('renders scroll view without crashing', () => {
+it('formats and validates strings', () => {
   expect(capitalizeEachWord('hello world')).toEqual('Hello World')
   expect(splitNameFromMail('johndoe@gmail.com')).toEqual('johndoe')
   expect(isValidString('')).toEqual(false)
