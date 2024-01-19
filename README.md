@@ -2,7 +2,10 @@
 
 ## Available Scripts
 
-In the project directory, you can run:
+(if not yet done, install npm)
+https://docs.npmjs.com/downloading-and-installing-node-js-and-npm\
+
+In the project directory, you can run :
 
 ### `npm start`
 
