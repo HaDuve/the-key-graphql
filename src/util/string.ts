@@ -7,3 +7,7 @@ export function capitalizeEachWord(username: string): string {
 export function splitNameFromMail(mail: string): string {
   return mail.split('@')[0]
 }
+
+export function isValidString(str: string): boolean {
+  return !!(str && typeof str === 'string' && str.length > 0)
+}

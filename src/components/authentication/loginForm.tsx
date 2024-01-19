@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { LOGIN_MUTATION } from '../../graphql/mutations.ts'
-import { capitalizeEachWord, splitNameFromMail } from '../../util/string.ts'
+import {
+  capitalizeEachWord,
+  isValidString,
+  splitNameFromMail,
+} from '../../util/string.ts'
+import { LOCAL_STORAGE_KEYS } from '../../constants/localStorageConst.ts'
 import LoadingSpinner from '../generic/LoadingSpinner/LoadingSpinner.tsx'
 
 const LoginForm = ({ onLoginSuccess }) => {
@@ -22,13 +27,11 @@ const LoginForm = ({ onLoginSuccess }) => {
 
   const handleLogin = async () => {
     // catch possible form errors
-    const isUsernameInvalid =
-      !username || typeof username !== 'string' || username.length < 1
-    const isPasswordInvalid =
-      !password || typeof password !== 'string' || password.length < 1
-    setUsernameValid(!isUsernameInvalid)
-    setPasswordValid(!isPasswordInvalid)
-    if (isUsernameInvalid || isPasswordInvalid) {
+    const isUsernameValid = isValidString(username)
+    const isPasswordValid = isValidString(password)
+    setUsernameValid(isUsernameValid)
+    setPasswordValid(isPasswordValid)
+    if (!isUsernameValid || !isPasswordValid) {
       setMarkInvalid(true)
       return
     }
@@ -44,8 +47,8 @@ const LoginForm = ({ onLoginSuccess }) => {
 
       if (!isTokenInvalid) {
         // store token and username in local storage
-        localStorage.setItem('token', token)
-        localStorage.setItem('username', userNameCapitalized)
+        localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, token)
+        localStorage.setItem(LOCAL_STORAGE_KEYS.USER, userNameCapitalized)
         onLoginSuccess(token, userNameCapitalized)
       }
     } catch (error) {
@@ -56,20 +59,25 @@ const LoginForm = ({ onLoginSuccess }) => {
 
   useEffect(() => {
     // check if user is already logged in
-    const token = localStorage.getItem('token')
-    const user = localStorage.getItem('username')
-    if (token && user) {
-      //TODO: validate token
-      onLoginSuccess(token, user)
-    }
+    const token = localStorage.getItem(LOCAL_STORAGE_KEYS.TOKEN)
+    const user = localStorage.getItem(LOCAL_STORAGE_KEYS.USER)
+    if (token && user) onLoginSuccess(token, user)
   })
 
   if (loading) return <LoadingSpinner />
 
   return (
     <div>
-      <h2>Login Form</h2>
+      <h2 style={{ marginLeft: 100 }}>Login Form</h2>
       <form
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 10,
+          margin: 10,
+        }}
         onSubmit={(e) => {
           e.preventDefault()
           handleLogin()
@@ -81,6 +89,7 @@ const LoginForm = ({ onLoginSuccess }) => {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            style={{ width: 200, margin: 10 }}
           />
         </label>
         <label>
@@ -89,6 +98,7 @@ const LoginForm = ({ onLoginSuccess }) => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            style={{ width: 200, margin: 10 }}
           />
         </label>
         <button type="submit" disabled={loading}>

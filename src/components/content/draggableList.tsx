@@ -5,7 +5,7 @@ import clamp from 'lodash.clamp'
 import swap from 'lodash-move'
 
 import styles from '../../styles.module.css'
-import { NODE_HEIGHT } from '../../constants/nodeviewerConst.ts'
+import { NODE_HEIGHT, PAGE_MAX } from '../../constants/nodeviewerConst.ts'
 
 function fn(
   order: number[],
@@ -76,7 +76,16 @@ function DraggableList({
 
   return (
     <div className={styles.container}>
-      <div className={styles.content} style={{ height: 20 * NODE_HEIGHT }}>
+      <div
+        className={styles.content}
+        style={{ height: 20 * NODE_HEIGHT + 150 }}
+      >
+        {items && items.length && (
+          <p style={{ color: 'whitesmoke' }}>
+            {items.length}/{PAGE_MAX} items rendered.
+          </p>
+        )}
+
         {springs.map(({ zIndex, shadow, y, scale }, i) => (
           <animated.div
             {...bind(i)}

@@ -2,10 +2,11 @@ import './App.css'
 import React, { useState } from 'react'
 import { ApolloProvider } from '@apollo/client'
 import client from './apollo'
-import LoginForm from './components/authentication/login.tsx'
+import LoginForm from './components/authentication/loginForm.tsx'
 import NodeViewer from './components/content/nodeviewer.tsx'
 import ScrollView from './components/generic/ScrollView.tsx'
 import './styles.module.css'
+import { LOCAL_STORAGE_KEYS } from './constants/localStorageConst.ts'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -13,7 +14,7 @@ function App() {
 
   const handleLoginSuccess = (token = '', user = '') => {
     if (token) {
-      localStorage.setItem('token', token)
+      localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, token)
     }
     if (user) {
       setUserName(user)
@@ -34,23 +35,21 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <div>
-        <header className="App-header">
-          {!isLoggedIn ? (
-            <LoginForm onLoginSuccess={handleLoginSuccess} />
-          ) : (
-            <div>
-              <div className="headercontainer">
-                <p>Hello, {userName}!</p>
-                <button onClick={handleLogout}>Logout</button>
-              </div>
-              <ScrollView>
-                <NodeViewer onLogout={handleLogout} />
-              </ScrollView>
+      <header className="App-header">
+        {!isLoggedIn ? (
+          <LoginForm onLoginSuccess={handleLoginSuccess} />
+        ) : (
+          <div>
+            <div className="headercontainer">
+              <p>Hello, {userName}!</p>
+              <button onClick={handleLogout}>Logout</button>
             </div>
-          )}
-        </header>
-      </div>
+            <ScrollView>
+              <NodeViewer onLogout={handleLogout} />
+            </ScrollView>
+          </div>
+        )}
+      </header>
     </ApolloProvider>
   )
 }
