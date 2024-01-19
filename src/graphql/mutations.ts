@@ -1,4 +1,4 @@
-import { DocumentNode, gql } from "@apollo/client";
+import { DocumentNode, gql } from '@apollo/client'
 
 export const LOGIN_MUTATION: DocumentNode = gql`
   mutation LoginJwt($input: LoginJwtInput!) {
@@ -12,4 +12,4 @@ export const LOGIN_MUTATION: DocumentNode = gql`
       }
     }
   }
-`;
+`

@@ -1,10 +1,10 @@
-import useIntersectedElement from "./useIntersectedElement.ts";
-import { UseIntersectedElementProps } from "./useIntersectedElement";
+import useIntersectedElement from './useIntersectedElement.ts'
+import { UseIntersectedElementProps } from './useIntersectedElement'
 
 export type UseInfiniteScrollProps = {
-  fetchNextPage: () => void;
-  options: UseIntersectedElementProps["options"];
-};
+  fetchNextPage: () => void
+  options: UseIntersectedElementProps['options']
+}
 
 const useInfiniteScroll = <ThresholdElement extends Element = Element>({
   fetchNextPage,
@@ -13,9 +13,9 @@ const useInfiniteScroll = <ThresholdElement extends Element = Element>({
   const { thresholdElementRef } = useIntersectedElement<ThresholdElement>({
     callback: fetchNextPage,
     options,
-  });
+  })
 
-  return { thresholdElementRef };
-};
+  return { thresholdElementRef }
+}
 
-export default useInfiniteScroll;
+export default useInfiniteScroll

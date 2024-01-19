@@ -1,23 +1,23 @@
 // src/hooks/usePosts/index.ts
-import { useQuery } from "@apollo/client";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { GET_CONTENT_NODES_QUERY } from "../graphql/queries.ts";
-import { PAGE_MAX, PAGE_MIN } from "../constants/nodeviewerConst.ts";
+import { useQuery } from '@apollo/client'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { GET_CONTENT_NODES_QUERY } from '../graphql/queries.ts'
+import { PAGE_MAX, PAGE_MIN } from '../constants/nodeviewerConst.ts'
 
 export type NodesType = {
   node: {
-    id: string;
+    id: string
     structureDefinition: {
-      title: string;
-    };
-  };
-};
+      title: string
+    }
+  }
+}
 
 export const useNodes = () => {
-  const storedMinPageLength = localStorage.getItem("minPageLength");
+  const storedMinPageLength = localStorage.getItem('minPageLength')
   const initialPageLength = storedMinPageLength
     ? parseInt(storedMinPageLength)
-    : PAGE_MIN;
+    : PAGE_MIN
 
   const { data, fetchMore, loading, error } = useQuery(
     GET_CONTENT_NODES_QUERY,
@@ -29,37 +29,37 @@ export const useNodes = () => {
         first: initialPageLength,
         // last: lastValue,
       },
-    }
-  );
+    },
+  )
 
   useEffect(() => {
-    localStorage.setItem("minPageLength", initialPageLength.toString());
-  }, [initialPageLength]);
+    localStorage.setItem('minPageLength', initialPageLength.toString())
+  }, [initialPageLength])
 
   const nodes: NodesType[] = useMemo(
     () => data?.Admin?.Tree?.GetContentNodes?.edges ?? [],
-    [data]
-  );
+    [data],
+  )
 
   const fetchMoreNodes = useCallback(async () => {
-    let deltaLength = 0;
-    const longerPageLength = nodes.length + PAGE_MIN;
+    let deltaLength = 0
+    const longerPageLength = nodes.length + PAGE_MIN
     if (longerPageLength > PAGE_MAX) {
       if (nodes.length > PAGE_MAX - PAGE_MIN && nodes.length < PAGE_MAX) {
         // set delta until max
-        deltaLength = PAGE_MAX - nodes.length;
+        deltaLength = PAGE_MAX - nodes.length
       } else {
-        return;
+        return
       }
     }
     const newPageLength =
-      deltaLength !== 0 ? nodes.length + deltaLength : longerPageLength;
+      deltaLength !== 0 ? nodes.length + deltaLength : longerPageLength
 
     await fetchMore({
       updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult) return prev;
+        if (!fetchMoreResult) return prev
         // updateQuery
-        return fetchMoreResult;
+        return fetchMoreResult
       },
       variables: {
         // pagination variables
@@ -68,11 +68,11 @@ export const useNodes = () => {
         first: newPageLength,
         // last: lastValue,
       },
-    });
+    })
     if (newPageLength > initialPageLength) {
-      localStorage.setItem("minPageLength", newPageLength.toString());
+      localStorage.setItem('minPageLength', newPageLength.toString())
     }
-  }, [fetchMore, nodes.length, initialPageLength]);
+  }, [fetchMore, nodes.length, initialPageLength])
 
-  return { fetchMoreNodes, loading, nodes, error };
-};
+  return { fetchMoreNodes, loading, nodes, error }
+}

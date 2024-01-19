@@ -1,4 +1,4 @@
 export type LoginJwtInput = {
-  email: string;
-  password: string;
-};
+  email: string
+  password: string
+}

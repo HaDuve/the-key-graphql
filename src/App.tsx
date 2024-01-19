@@ -1,36 +1,36 @@
-import "./App.css";
-import React, { useState } from "react";
-import { ApolloProvider } from "@apollo/client";
-import client from "./apollo";
-import LoginForm from "./components/authentication/login.tsx";
-import NodeViewer from "./components/content/nodeviewer.tsx";
-import ScrollView from "./components/generic/ScrollView.tsx";
-import "./styles.module.css";
+import './App.css'
+import React, { useState } from 'react'
+import { ApolloProvider } from '@apollo/client'
+import client from './apollo'
+import LoginForm from './components/authentication/login.tsx'
+import NodeViewer from './components/content/nodeviewer.tsx'
+import ScrollView from './components/generic/ScrollView.tsx'
+import './styles.module.css'
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [userName, setUserName] = useState('')
 
-  const handleLoginSuccess = (token = "", user = "") => {
+  const handleLoginSuccess = (token = '', user = '') => {
     if (token) {
-      localStorage.setItem("token", token);
+      localStorage.setItem('token', token)
     }
     if (user) {
-      setUserName(user);
+      setUserName(user)
     }
-    setIsLoggedIn(true);
-  };
+    setIsLoggedIn(true)
+  }
 
   const handleLogout = async () => {
-    localStorage.clear();
-    setUserName("");
-    setIsLoggedIn(false);
+    localStorage.clear()
+    setUserName('')
+    setIsLoggedIn(false)
     try {
-      await client.resetStore();
+      await client.resetStore()
     } catch (error) {
       // console.warn("Error resetting store:", error);
     }
-  };
+  }
 
   return (
     <ApolloProvider client={client}>
@@ -52,7 +52,7 @@ function App() {
         </header>
       </div>
     </ApolloProvider>
-  );
+  )
 }
 
-export default App;
+export default App
