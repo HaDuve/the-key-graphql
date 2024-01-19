@@ -71,7 +71,5 @@ xit('login succeeds with correct credentials', async () => {
   )
   await new Promise((r) => setTimeout(r, 3000))
   const successText = await screen.findByText(/Hello, /i)
-  await waitFor(() => {
-    expect(successText).toBeInTheDocument()
-  })
+  expect(successText).toBeInTheDocument()
 })
